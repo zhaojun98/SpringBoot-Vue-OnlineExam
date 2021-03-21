@@ -27,12 +27,14 @@ public class PaperController {
 
     @Autowired
     private FillQuestionServiceImpl fillQuestionService;
+
+    //查询所有题库信息
     @GetMapping("/papers")
     public ApiResult<PaperManage> findAll() {
        ApiResult res =  ApiResultHandler.buildApiResult(200,"请求成功",paperService.findAll());
        return  res;
     }
-
+    //更具aperId查询题库
     @GetMapping("/paper/{paperId}")
     public Map<Integer, List<?>> findById(@PathVariable("paperId") Integer paperId) {
         List<MultiQuestion> multiQuestionRes = multiQuestionService.findByIdAndType(paperId);   //选择题题库 1
@@ -44,7 +46,7 @@ public class PaperController {
         map.put(3,judgeQuestionRes);
         return  map;
     }
-
+    //添加题库
     @PostMapping("/paperManage")
     public ApiResult add(@RequestBody PaperManage paperManage) {
         int res = paperService.add(paperManage);

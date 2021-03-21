@@ -18,8 +18,7 @@ public class LoginController {
     @Autowired
     private LoginServiceImpl loginService;
 
-//    @PostMapping("/login")
-//    @PostMapping(path ="/login", produces = "application/json")
+    //登陆
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ApiResult login(@RequestBody Login login) {
 

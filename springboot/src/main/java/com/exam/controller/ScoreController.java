@@ -13,13 +13,13 @@ import java.util.List;
 public class ScoreController {
     @Autowired
     private ScoreServiceImpl scoreService;
-
+    //查询所有分数
     @GetMapping("/scores")
     public ApiResult findAll() {
         List<Score> res = scoreService.findAll();
         return ApiResultHandler.buildApiResult(200,"查询所有学生成绩",res);
     }
-
+    //根据学生编号查询学生信息
     @GetMapping("/score/{studentId}")
     public ApiResult findById(@PathVariable("studentId") Integer studentId) {
         List<Score> res = scoreService.findById(studentId);
@@ -29,7 +29,7 @@ public class ScoreController {
             return ApiResultHandler.buildApiResult(400,"ID不存在",res);
         }
     }
-
+    //添加分数
     @PostMapping("/score")
     public ApiResult add(@RequestBody Score score) {
         int res = scoreService.add(score);
@@ -39,7 +39,7 @@ public class ScoreController {
             return ApiResultHandler.buildApiResult(200,"成绩添加成功",res);
         }
     }
-
+    //根据考试编号查询学生信息
     @GetMapping("/scores/{examCode}")
     public ApiResult findByExamCode(@PathVariable("examCode") Integer examCode) {
         List<Score> scores = scoreService.findByExamCode(examCode);

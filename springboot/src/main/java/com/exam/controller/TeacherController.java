@@ -18,7 +18,7 @@ public class TeacherController {
     public TeacherController(TeacherServiceImpl teacherService){
         this.teacherService = teacherService;
     }
-
+    //分页查询全部教师信息查询
     @GetMapping("/teachers/{page}/{size}")
     public ApiResult findAll(@PathVariable Integer page, @PathVariable Integer size){
         Page<Teacher> teacherPage = new Page<>(page,size);
@@ -26,22 +26,22 @@ public class TeacherController {
 
         return ApiResultHandler.buildApiResult(200,"查询所有教师",teacherIPage);
     }
-
+    //根据教师编号查询教师信息
     @GetMapping("/teacher/{teacherId}")
     public ApiResult findById(@PathVariable("teacherId") Integer teacherId){
         return ApiResultHandler.success(teacherService.findById(teacherId));
     }
-
+    //更具教师编号删除教师信息
     @DeleteMapping("/teacher/{teacherId}")
     public ApiResult deleteById(@PathVariable("teacherId") Integer teacherId){
         return ApiResultHandler.success(teacherService.deleteById(teacherId));
     }
-
+    //更新教师信息
     @PutMapping("/teacher")
     public ApiResult update(@RequestBody Teacher teacher){
         return ApiResultHandler.success(teacherService.update(teacher));
     }
-
+    //添加教师信息
     @PostMapping("/teacher")
     public ApiResult add(@RequestBody Teacher teacher){
         return ApiResultHandler.success(teacherService.add(teacher));
