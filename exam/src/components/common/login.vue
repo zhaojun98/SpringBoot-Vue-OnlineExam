@@ -72,6 +72,7 @@ export default {
           ...this.formLabelAlign
         }
       }).then(res=>{
+        debugger
         let resData = res.data.data
         if(resData != null) {
           switch(resData.role) {

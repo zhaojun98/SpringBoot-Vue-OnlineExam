@@ -14,7 +14,7 @@ public class ExamManageController {
 
     @Autowired
     private ExamManageServiceImpl examManageService;
-
+    //查询所有
     @GetMapping("/exams")
     public ApiResult findAll(){
         System.out.println("不分页查询所有试卷");
@@ -22,7 +22,7 @@ public class ExamManageController {
         apiResult = ApiResultHandler.buildApiResult(200, "请求成功！", examManageService.findAll());
         return apiResult;
     }
-
+    //查询所有我的练习试卷信息
     @GetMapping("/exams/{page}/{size}")
     public ApiResult findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
         System.out.println("分页查询所有试卷");
@@ -32,7 +32,7 @@ public class ExamManageController {
         apiResult = ApiResultHandler.buildApiResult(200, "请求成功！", all);
         return apiResult;
     }
-
+    //根据考试代码搜索
     @GetMapping("/exam/{examCode}")
     public ApiResult findById(@PathVariable("examCode") Integer examCode){
         System.out.println("根据ID查找");
@@ -42,13 +42,14 @@ public class ExamManageController {
         }
         return ApiResultHandler.buildApiResult(200,"请求成功！",res);
     }
-
+    //根据考试代码删除
     @DeleteMapping("/exam/{examCode}")
     public ApiResult deleteById(@PathVariable("examCode") Integer examCode){
         int res = examManageService.delete(examCode);
         return ApiResultHandler.buildApiResult(200,"删除成功",res);
     }
 
+    //更新试卷信息
     @PutMapping("/exam")
     public ApiResult update(@RequestBody ExamManage exammanage){
         int res = examManageService.update(exammanage);
@@ -59,6 +60,7 @@ public class ExamManageController {
         return ApiResultHandler.buildApiResult(200,"更新成功",res);
     }
 
+    //添加试卷
     @PostMapping("/exam")
     public ApiResult add(@RequestBody ExamManage exammanage){
         int res = examManageService.add(exammanage);
@@ -69,6 +71,7 @@ public class ExamManageController {
         }
     }
 
+    //根据paperId查询
     @GetMapping("/examManagePaperId")
     public ApiResult findOnlyPaperId() {
         ExamManage res = examManageService.findOnlyPaperId();
