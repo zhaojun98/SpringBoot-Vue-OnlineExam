@@ -6,7 +6,9 @@ import com.exam.serviceimpl.AdminServiceImpl;
 import com.exam.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+/*
+* 试卷类接口
+* */
 @RestController
 public class AdminController {
 

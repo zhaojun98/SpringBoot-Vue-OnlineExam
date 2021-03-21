@@ -32,7 +32,7 @@ public class ExamManageController {
         apiResult = ApiResultHandler.buildApiResult(200, "请求成功！", all);
         return apiResult;
     }
-    //根据考试代码搜索
+    //根据科目编号搜索
     @GetMapping("/exam/{examCode}")
     public ApiResult findById(@PathVariable("examCode") Integer examCode){
         System.out.println("根据ID查找");

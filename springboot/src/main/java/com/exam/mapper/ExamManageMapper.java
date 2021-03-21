@@ -16,21 +16,21 @@ public interface ExamManageMapper {
     IPage<ExamManage> findAll(Page page);
 
     @Select("select * from exam_manage where examCode = #{examCode}")
-    ExamManage findById(Integer examCode);
+    ExamManage findById(Integer examCode);          //根据考试编号搜索
 
     @Delete("delete from exam_manage where examCode = #{examCode}")
-    int delete(Integer examCode);
+    int delete(Integer examCode);           //根据考试编号删除
 
     @Update("update exam_manage set description = #{description},source = #{source},paperId = #{paperId}," +
             "examDate = #{examDate},totalTime = #{totalTime},grade = #{grade},term = #{term}," +
             "major = #{major},institute = #{institute},totalScore = #{totalScore}," +
             "type = #{type},tips = #{tips} where examCode = #{examCode}")
-    int update(ExamManage exammanage);
+    int update(ExamManage exammanage);          //更新对象信息
 
     @Options(useGeneratedKeys = true,keyProperty = "examCode")
     @Insert("insert into exam_manage(description,source,paperId,examDate,totalTime,grade,term,major,institute,totalScore,type,tips)" +
             " values(#{description},#{source},#{paperId},#{examDate},#{totalTime},#{grade},#{term},#{major},#{institute},#{totalScore},#{type},#{tips})")
-    int add(ExamManage exammanage);
+    int add(ExamManage exammanage);         //添加一个考试信息
 
     /**
      * 查询最后一条记录的paperId,返回给前端达到自增效果
