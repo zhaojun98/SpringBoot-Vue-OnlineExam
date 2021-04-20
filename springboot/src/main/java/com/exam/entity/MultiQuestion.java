@@ -7,9 +7,9 @@ import lombok.Data;
 public class MultiQuestion {
     private Integer questionId;
 
-    private String subject;
+    private String subject;         //试卷名称
 
-    private String section;
+    private String section;            // 对应章节
 
     private String answerA;             //答案A
 
