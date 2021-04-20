@@ -1,20 +1,79 @@
 //获取试卷并跳转到添加题库
 <template>
   <div class="exam">
+    <el-button
+      style="float: left; margin-right: 10px"
+      size="small"
+      @click="download"
+      >模板下载</el-button
+    >
+    <el-upload
+      class="upload-daoru"
+      ref="upload"
+      :action="action"
+      :on-change="uploadonchange"
+      accept=".xlsx,.xls"
+      :show-file-list="false"
+      :auto-upload="false"
+    >
+      <el-button slot="trigger" size="small">导入模板</el-button>
+    </el-upload>
     <el-table :data="pagination.records" border>
-      <el-table-column fixed="left" prop="source" label="试卷名称" width="180"></el-table-column>
-      <el-table-column prop="description" label="介绍" width="200"></el-table-column>
-      <el-table-column prop="institute" label="所属学院" width="120"></el-table-column>
-      <el-table-column prop="major" label="所属专业" width="200"></el-table-column>
+      <el-table-column
+        fixed="left"
+        prop="source"
+        label="试卷名称"
+        width="180"
+      ></el-table-column>
+      <el-table-column
+        prop="description"
+        label="介绍"
+        width="200"
+      ></el-table-column>
+      <el-table-column
+        prop="institute"
+        label="所属学院"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="major"
+        label="所属专业"
+        width="200"
+      ></el-table-column>
       <el-table-column prop="grade" label="年级" width="100"></el-table-column>
-      <el-table-column prop="examDate" label="考试日期" width="120"></el-table-column>
-      <el-table-column prop="totalTime" label="持续时间" width="120"></el-table-column>
-      <el-table-column prop="totalScore" label="总分" width="120"></el-table-column>
-      <el-table-column prop="type" label="试卷类型" width="120"></el-table-column>
-      <el-table-column prop="tips" label="考生提示" width="400"></el-table-column>
+      <el-table-column
+        prop="examDate"
+        label="考试日期"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="totalTime"
+        label="持续时间"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="totalScore"
+        label="总分"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="type"
+        label="试卷类型"
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="tips"
+        label="考生提示"
+        width="400"
+      ></el-table-column>
       <el-table-column fixed="right" label="操作" width="150">
         <template slot-scope="scope">
-          <el-button @click="add(scope.row.paperId,scope.row.source)" type="primary" size="small">增加题库</el-button>
+          <el-button
+            @click="add(scope.row.paperId, scope.row.source)"
+            type="primary"
+            size="small"
+            >增加题库</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -25,7 +84,9 @@
       :page-sizes="[4, 8, 10, 20]"
       :page-size="pagination.size"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="pagination.total" class="page">
+      :total="pagination.total"
+      class="page"
+    >
     </el-pagination>
   </div>
 </template>
@@ -35,36 +96,102 @@ export default {
   data() {
     return {
       form: {}, //保存点击以后当前试卷的信息
-      pagination: { //分页后的考试信息
+      pagination: {
+        //分页后的考试信息
         current: 1, //当前页
         total: null, //记录条数
-        size: 4 //每页条数
+        size: 4, //每页条数
       },
-    }
+    };
   },
   created() {
-    this.getExamInfo()
+    this.getExamInfo();
   },
   methods: {
-    getExamInfo() { //分页查询所有试卷信息
-      this.$axios(`/api/exams/${this.pagination.current}/${this.pagination.size}`).then(res => {
-        this.pagination = res.data.data
-      }).catch(error => {
-      })
+    download() {
+      //   this.$axios({
+      //   url: `/api/exportClient`,
+      //   method: "post",
+      //   // headers: { "content-type": "application/x-www-form-urlencoded" },
+      //   // data: formData,
+      // }).then((res) => {
+      //     debugger
+      //     if (res.data.code == 200) {
+
+            
+      //     this.$notify({
+      //       title: "操作成功",
+      //       message: "导入成功",
+      //       type: "success",
+      //     });
+      //     this.init();
+      //   } else {
+      //     this.$notify.error({
+      //       title: "操作失败",
+      //       message: "导入失败",
+      //       type: "error",
+      //     });
+      //   }
+
+      // })
+       window.location.href = "http://localhost:8081/api/exportClient";
+    },
+    uploadonchange(file) {
+      let formData = new FormData();
+      formData.append("file", file.raw);
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" },
+      };
+      this.$axios({
+        url: `/api/importClient`,
+        method: "post",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        data: formData,
+      }).then((res) => {
+        debugger;
+        if (res.data.code == 200) {
+          this.$notify({
+            title: "操作成功",
+            message: "导入成功",
+            type: "success",
+          });
+          this.init();
+        } else {
+          this.$notify.error({
+            title: "操作失败",
+            message: "导入失败",
+            type: "error",
+          });
+        }
+      });
+    },
+    getExamInfo() {
+      //分页查询所有试卷信息
+      this.$axios(
+        `/api/exams/${this.pagination.current}/${this.pagination.size}`
+      )
+        .then((res) => {
+          this.pagination = res.data.data;
+        })
+        .catch((error) => {});
     },
     //改变当前记录条数
     handleSizeChange(val) {
-      this.pagination.size = val
-      this.getExamInfo()
+      this.pagination.size = val;
+      this.getExamInfo();
     },
     //改变当前页码，重新发送请求
     handleCurrentChange(val) {
-      this.pagination.current = val
-      this.getExamInfo()
+      this.pagination.current = val;
+      this.getExamInfo();
     },
-    add(paperId,source) { //增加题库
-      this.$router.push({path:'/addAnswerChildren',query: {paperId: paperId,subject:source}})
-    }
+    add(paperId, source) {
+      //增加题库
+      this.$router.push({
+        path: "/addAnswerChildren",
+        query: { paperId: paperId, subject: source },
+      });
+    },
   },
 };
 </script>
@@ -77,7 +204,7 @@ export default {
     justify-content: center;
     align-items: center;
   }
-  .edit{
+  .edit {
     margin-left: 20px;
   }
 }
