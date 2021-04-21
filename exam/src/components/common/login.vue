@@ -73,6 +73,7 @@ export default {
         }
       }).then(res=>{
         debugger
+        
         let resData = res.data.data
         if(resData != null) {
           switch(resData.role) {
@@ -86,11 +87,13 @@ export default {
               this.$cookies.set("cname", resData.teacherName)
               this.$cookies.set("cid", resData.teacherId)
               this.$cookies.set("role", 1)
+              localStorage.setItem("teacherId",resData.teacherId)
               this.$router.push({path: '/index' }) //跳转到教师用户
               break
             case "2": //学生
               this.$cookies.set("cname", resData.studentName)
               this.$cookies.set("cid", resData.studentId)
+              localStorage.setItem("studentId",resData.studentId)
               this.$router.push({path: '/student'})
               break
           }

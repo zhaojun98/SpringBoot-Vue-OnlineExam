@@ -83,6 +83,10 @@
         <el-button @click="dialogVisible = false">知道了</el-button>
       </span>
     </el-dialog>
+
+     <div>
+       <el-button :plain="true" @click="open_msg">错误</el-button>
+     </div>
   </div>
 </template>
 
@@ -110,7 +114,11 @@ export default {
     //初始化页面数据
     init() {
       let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
+      let studentIds=localStorage.getItem("studentId");
+      this.$axios(`/api/exam/${examCode}/${studentIds}`).then(res => {  //通过examCode请求试卷详细信息
+      if(res.code!=200){
+          this.open_msg(res.data && res.data.message);
+      }
         res.data.data.examDate = res.data.data.examDate.substr(0,10)
         this.examData = { ...res.data.data}
         let paperId = this.examData.paperId
@@ -128,6 +136,9 @@ export default {
           })
         })
       })
+    },
+     open_msg(msg) {
+        this.$message.error(msg);
     },
     toAnswer(id) {
       this.$router.push({path:"/answer",query:{examCode: id}})

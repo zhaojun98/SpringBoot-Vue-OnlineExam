@@ -137,6 +137,9 @@
         </div>
         </transition>
      </div> 
+     <div>
+       <el-button :plain="true" @click="open_msg">错误</el-button>
+     </div>
   </div>
 </template>
 
@@ -206,11 +209,19 @@ export default {
     calcuScore() { //计算答题分数
       
     },
+    open_msg(msg) {
+        this.$message.error(msg);
+    },
     getExamData() { //获取当前试卷所有信息
+     
       let date = new Date()
       this.startTime = this.getTime(date)
       let examCode = this.$route.query.examCode //获取路由传递过来的试卷编号
-      this.$axios(`/api/exam/${examCode}`).then(res => {  //通过examCode请求试卷详细信息
+      let studentIds=localStorage.getItem("studentId");
+      this.$axios(`/api/exam/${examCode}/${studentIds}`).then(res => {  //通过examCode请求试卷详细信息
+      if(res.code!=200){
+          this.open_msg(res.data && res.data.message);
+      }
         this.examData = { ...res.data.data} //获取考试详情
         this.index = 0
         this.time = this.examData.totalScore //获取分钟数

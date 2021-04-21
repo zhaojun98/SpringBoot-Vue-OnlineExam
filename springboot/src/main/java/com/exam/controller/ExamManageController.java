@@ -4,16 +4,23 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.ApiResult;
 import com.exam.entity.ExamManage;
+import com.exam.entity.Score;
 import com.exam.serviceimpl.ExamManageServiceImpl;
+import com.exam.serviceimpl.ScoreServiceImpl;
 import com.exam.util.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class ExamManageController {
 
     @Autowired
     private ExamManageServiceImpl examManageService;
+
+    @Autowired
+    private ScoreServiceImpl scoreService;
     //查询所有
     @GetMapping("/exams")
     public ApiResult findAll(){
@@ -25,7 +32,6 @@ public class ExamManageController {
     //查询所有我的练习试卷信息
     @GetMapping("/exams/{page}/{size}")
     public ApiResult findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size){
-        System.out.println("分页查询所有试卷");
         ApiResult apiResult;
         Page<ExamManage> examManage = new Page<>(page,size);
         IPage<ExamManage> all = examManageService.findAll(examManage);
@@ -33,8 +39,12 @@ public class ExamManageController {
         return apiResult;
     }
     //根据科目编号搜索
-    @GetMapping("/exam/{examCode}")
-    public ApiResult findById(@PathVariable("examCode") Integer examCode){
+    @GetMapping("/exam/{examCode}/{studentId}")
+    public ApiResult findById(@PathVariable("examCode") Integer examCode,@PathVariable("studentId") Integer studentId){
+        List<Score> byId = scoreService.findById(studentId);
+        if(byId!=null){
+            return ApiResultHandler.buildApiResult(500,"考试已结束，不能重复答卷！","error");
+        }
         System.out.println("根据ID查找");
         ExamManage res = examManageService.findById(examCode);
         if(res == null) {

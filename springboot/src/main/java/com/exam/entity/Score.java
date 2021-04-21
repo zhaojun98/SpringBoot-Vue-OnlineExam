@@ -6,19 +6,19 @@ import java.util.Date;
 
 @Data
 public class Score {
-    private Integer examCode;
+    private Integer examCode;           //考试编号
 
-    private Integer studentId;
+    private Integer studentId;          //学生编号
 
-    private String subject;
+    private String subject;         //科目
 
     private Integer ptScore;
 
-    private Integer etScore;
+    private Integer etScore;            //考试成绩
 
     private Integer score;
 
-    private Integer scoreId;
+    private Integer scoreId;                //成绩编号
 
-    private String answerDate;
+    private String answerDate;          //答题日期
 }
