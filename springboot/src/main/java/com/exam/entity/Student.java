@@ -3,27 +3,27 @@ package com.exam.entity;
 public class Student {
     private Integer studentId;
 
-    private String studentName;
+    private String studentName;     //姓名
 
-    private String grade;
+    private String grade;       //年纪
 
-    private String major;
+    private String major;       //专业
 
-    private String clazz;
+    private String clazz;       //班级
 
-    private String institute;
+    private String institute;       //学院
 
-    private String tel;
+    private String tel;     //联系方式
 
-    private String email;
+    private String email;       //邮箱
 
-    private String pwd;
+    private String pwd;         //密码
 
-    private String cardId;
+    private String cardId;          //班级id
 
-    private String sex;
+    private String sex;         //性别
 
-    private String role;
+    private String role;            //角色
 
     public Integer getStudentId() {
         return studentId;

@@ -3,12 +3,19 @@ package com.exam.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.ApiResult;
+import com.exam.entity.Student;
 import com.exam.entity.Teacher;
 import com.exam.serviceimpl.TeacherServiceImpl;
 import com.exam.util.ApiResultHandler;
 import com.exam.vo.AnswerVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 public class TeacherController {
@@ -46,4 +53,31 @@ public class TeacherController {
     public ApiResult add(@RequestBody Teacher teacher){
         return ApiResultHandler.success(teacherService.add(teacher));
     }
+
+    /**
+     * 导出教师信息模板
+     * @param response
+     */
+    @RequestMapping("/teacher/exportClient")
+    public void toUser(HttpServletResponse response, HttpServletRequest req){
+        teacherService.file(response);
+    }
+
+
+    /**
+     * 导入教师信息数据
+     * @param
+     */
+    @RequestMapping("/teacher/importClient")
+    public Object importClient(HttpServletRequest request ){
+        MultipartFile file = ((MultipartHttpServletRequest) request).getFile("file");
+
+        List<Teacher> teachers = teacherService.clientParseExcel(file);
+        for (Teacher teacher : teachers) {
+            teacherService.add(teacher);
+        }
+        return ApiResultHandler.buildApiResult(200,"导入成功","success");
+    }
+
+
 }

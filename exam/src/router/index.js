@@ -89,6 +89,7 @@ export default new Router({
         {path: '/manager', component: () => import('@/components/student/manager')},
         {path: '/examMsg', component: () => import('@/components/student/examMsg')},
         {path: '/message', component: () => import('@/components/student/message')},
+        {path: '/video', component: () => import('@/components/video/video.vue')},
         {path: '/studentScore', component: () => import("@/components/student/answerScore")},
         {path: '/scoreTable', component: () => import("@/components/student/scoreTable")}
       ]

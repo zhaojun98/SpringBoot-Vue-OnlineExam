@@ -8,10 +8,13 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueCookies from 'vue-cookies'
+// import VideoPlayer from 'vue-video-player'
+
 
 Vue.use(ElementUI)
 Vue.use(VueCookies)
 
+// Vue.use(VideoPlayer)
 Vue.config.productionTip = false
 Vue.prototype.bus = new Vue()
 Vue.prototype.$echarts = echarts

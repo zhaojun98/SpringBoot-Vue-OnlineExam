@@ -1,6 +1,23 @@
 // 学生管理页面
 <template>
   <div class="all">
+    <el-button
+      style="float: left; margin-right: 10px"
+      size="small"
+      @click="download"
+      >模板下载</el-button
+    >
+    <el-upload
+      class="upload-daoru"
+      ref="upload"
+      :action="action"
+      :on-change="uploadonchange"
+      accept=".xlsx,.xls"
+      :show-file-list="false"
+      :auto-upload="false"
+    >
+      <el-button slot="trigger" size="small">导入模板</el-button>
+    </el-upload>
     <el-table :data="pagination.records" border>
       <el-table-column fixed="left" prop="studentName" label="姓名" width="180"></el-table-column>
       <el-table-column prop="institute" label="学院" width="200"></el-table-column>
@@ -83,6 +100,64 @@ export default {
     this.getStudentInfo();
   },
   methods: {
+
+     download() {
+      //   this.$axios({
+      //   url: `/api/exportClient`,
+      //   method: "post",
+      //   // headers: { "content-type": "application/x-www-form-urlencoded" },
+      //   // data: formData,
+      // }).then((res) => {
+      //     debugger
+      //     if (res.data.code == 200) {
+
+            
+      //     this.$notify({
+      //       title: "操作成功",
+      //       message: "导入成功",
+      //       type: "success",
+      //     });
+      //     this.init();
+      //   } else {
+      //     this.$notify.error({
+      //       title: "操作失败",
+      //       message: "导入失败",
+      //       type: "error",
+      //     });
+      //   }
+
+      // })
+       window.location.href = "http://localhost:8081/api/student/exportClient";
+    },
+    uploadonchange(file) {
+      let formData = new FormData();
+      formData.append("file", file.raw);
+      let config = {
+        headers: { "Content-Type": "multipart/form-data" },
+      };
+      this.$axios({
+        url: `/api/student/importClient`,
+        method: "post",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        data: formData,
+      }).then((res) => {
+        debugger;
+        if (res.data.code == 200) {
+          this.$notify({
+            title: "操作成功",
+            message: "导入成功",
+            type: "success",
+          });
+          this.init();
+        } else {
+          this.$notify.error({
+            title: "操作失败",
+            message: "导入失败",
+            type: "error",
+          });
+        }
+      });
+    },
     getStudentInfo() {
       //分页查询所有试卷信息
       this.$axios(`/api/students/${this.pagination.current}/${this.pagination.size}`).then(res => {
