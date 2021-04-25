@@ -1,5 +1,6 @@
 package com.exam.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.ApiResult;
@@ -37,6 +38,15 @@ public class ExamManageController {
         IPage<ExamManage> all = examManageService.findAll(examManage);
         apiResult = ApiResultHandler.buildApiResult(200, "请求成功！", all);
         return apiResult;
+    }
+
+    @PostMapping("/exams/findByAll")
+    public ApiResult findAll(@RequestBody JSONObject param){
+        Page<ExamManage> examManage = new Page<>();
+        examManage.setPages(param.getLong("page"));
+        examManage.setSize(param.getLong("size"));
+        IPage<ExamManage> all = examManageService.findAll(examManage);
+        return  ApiResultHandler.buildApiResult(200, "请求成功！", all);
     }
     //根据科目编号搜索
     @GetMapping("/exam/{examCode}/{studentId}")
