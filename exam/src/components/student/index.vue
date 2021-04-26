@@ -9,9 +9,8 @@
           <li><a href="javascript:;" @click="practice()">我的练习</a></li>
           <li><router-link to="/scoreTable">我的分数</router-link></li>
           <li><router-link to="/message">给我留言</router-link></li>
-          <li><router-link to="/video">视频</router-link></li>
-          <!-- <li><a href="javascript:;" to="/video">视频</a></li> -->
-          <li><a href="javascript:;">待定</a></li>
+          <li><router-link to="/video">在线学习</router-link></li>
+          <li><router-link to="/cardVideo">在线学习列表</router-link></li>
           <li class="right" @mouseenter="flag = !flag" @mouseleave="flag = !flag">
             <a href="javascript:;"><i class="iconfont icon-Userselect icon"></i>{{user.userName}}</a>
             <div class="msg" v-if="flag">

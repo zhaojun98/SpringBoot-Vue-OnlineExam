@@ -35,7 +35,7 @@
             <div v-for="(replayData,index2) in data.replays" :key="index2">
               <p class="comment"><i class="iconfont icon-huifuxiaoxi"></i>{{replayData.replay}}</p>
             </div>
-            <span class="replay" @click="replay(data.id)" v-if="flag && index == current">Comment</span>
+            <span class="replay" @click="replay(data.id)" v-if="flag && index == current">回复</span>
           </li>
         </ul>
       </div>
