@@ -24,7 +24,8 @@ public interface MvInfoMapper {
 	 *
 	 * @return 返回集合，没有返回空List
 	 */
-	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id where m.subject= #{subject}")
+//	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id where m.subject= #{subject}")
+	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id where m.subject=#{subject}  or m.pid=#{pid} or m.id=#{id}")
 	List<MvInfo> listAllMv(Page page, @Param("subject") String subject);
 
 	/**
