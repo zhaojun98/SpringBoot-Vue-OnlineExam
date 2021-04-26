@@ -17,13 +17,15 @@ public class MvInfo {
 	private String pid;
 	/** 剧集 */
 	private String drama;
-
+	/**  封面*/
+	private String imgPath;
+	//名字
 	@TableField(exist = false)
 	private String teacherName;
-
+	//学院
 	@TableField(exist = false)
 	private String institute;
-
+	///职称
 	@TableField(exist = false)
 	private String type;
 
@@ -107,6 +109,14 @@ public class MvInfo {
 		this.type = type;
 	}
 
+	public String getImgPath() {
+		return imgPath;
+	}
+
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) { return true; }
@@ -120,17 +130,6 @@ public class MvInfo {
         return java.util.Objects.hash(id);
     }
     
-    @Override
-    public String toString() {
-        return "MvInfo{" +
-				"id=" + id +
-						",teacherId='" + teacherId + "'" + 
-						",createTime='" + createTime + "'" + 
-						",mvPath='" + mvPath + "'" + 
-						",subject='" + subject + "'" + 
-						",pid='" + pid + "'" + 
-						",drama='" + drama + "'" + 
-		                '}';
-    }
+
 	
 }
