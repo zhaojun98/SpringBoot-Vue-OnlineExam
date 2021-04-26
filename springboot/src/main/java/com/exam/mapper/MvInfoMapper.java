@@ -1,6 +1,7 @@
 package com.exam.mapper;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.MvInfo;
 import org.apache.ibatis.annotations.*;
@@ -17,7 +18,7 @@ public interface MvInfoMapper {
      * @return 返回集合，没有返回空List
      */
 	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id")
-	List<MvInfo> listAll(Page page);
+	IPage<MvInfo> listAll(Page page);
 
 	/**
 	 * 视频列表查询
@@ -25,8 +26,8 @@ public interface MvInfoMapper {
 	 * @return 返回集合，没有返回空List
 	 */
 //	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id where m.subject= #{subject}")
-	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id where m.subject=#{subject}  or m.pid=#{pid} or m.id=#{id}")
-	List<MvInfo> listAllMv(Page page, @Param("subject") String subject);
+	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id where m.subject=#{subject}  or m.pid=#{id} or m.id=#{id}")
+	IPage<MvInfo> listAllMv(Page page, @Param("subject") String subject,@Param("id") String id);
 
 	/**
      * 根据主键查询

@@ -2,6 +2,7 @@ package com.exam.serviceimpl;
 
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.MvInfo;
 import com.exam.mapper.MvInfoMapper;
@@ -21,7 +22,7 @@ public class MvInfoService {
      *
      * @return 返回集合，没有返回空List
      */
-    public List<MvInfo> listAll(Page page) {
+    public IPage<MvInfo> listAll(Page page) {
     	return mvInfoMapper.listAll(page);
     }
 
@@ -30,8 +31,8 @@ public class MvInfoService {
      *
      * @return 返回集合，没有返回空List
      */
-    public List<MvInfo> listAllMv(Page page, String subject){
-        return mvInfoMapper.listAllMv(page,subject);
+    public IPage<MvInfo> listAllMv(Page page, String subject,String id){
+        return mvInfoMapper.listAllMv(page,subject,id);
     }
 
 

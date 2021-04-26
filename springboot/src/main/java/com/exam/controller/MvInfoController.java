@@ -3,6 +3,7 @@ package com.exam.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.ApiResult;
 import com.exam.entity.MvInfo;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -47,7 +49,7 @@ public class MvInfoController {
     public ApiResult listAllMv(@RequestBody JSONObject param){
         Page<MvInfo> page = new Page<>(param.getLong("page"), param.getLong("size"));
         QueryWrapper<MvInfo> queryWrapper = new QueryWrapper<>();
-        return ApiResultHandler.buildApiResult(200,"请求成功",mvInfoService.listAllMv(page,param.getString("subject")));
+        return ApiResultHandler.buildApiResult(200,"请求成功",mvInfoService.listAllMv(page, param.getString("subject"),param.getString("id")));
     }
 
 

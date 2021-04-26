@@ -31,8 +31,7 @@ public class Result {
     public <T> Object buildPage(Page<T> page){
         JSONObject result = new JSONObject();
         result.put("code", "200");
-        result.put("total", page.getTotal());
-        result.put("rows", page.getRecords());
+        result.put("data", page);
         return result;
     }
 
