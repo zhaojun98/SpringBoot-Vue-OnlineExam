@@ -1,5 +1,6 @@
 package com.exam.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.exam.entity.ApiResult;
@@ -21,11 +22,10 @@ public class MessageController {
 
 
 
-    @GetMapping("/messages/{page}/{size}")
-    public ApiResult<Message> findAll(@PathVariable("page") Integer page, @PathVariable("size") Integer size) {
-        Page<Message> messagePage = new Page<>(page,size);
-        IPage<Message> all = messageService.findAll(messagePage);
-        return ApiResultHandler.buildApiResult(200,"查询所有留言",all);
+    @PostMapping("/messages/findAll")
+    public ApiResult<Message> findAll(@RequestBody JSONObject param) {
+        Page<Message> page = new Page<>(param.getLong("page"),param.getLong("size"));
+        return ApiResultHandler.buildApiResult(200,"查询所有留言",messageService.findAll2(page,param.getString("mvId")));
     }
 
     @GetMapping("/message/{id}")
@@ -42,6 +42,7 @@ public class MessageController {
 
     @PostMapping("/message/add")
     public ApiResult add(@RequestBody Message message) {
+        message.setTime(String.valueOf(System.currentTimeMillis()));
         int res = messageService.add(message);
         if (res == 0) {
             return ApiResultHandler.buildApiResult(400,"添加失败",res);
@@ -49,4 +50,5 @@ public class MessageController {
             return ApiResultHandler.buildApiResult(200,"添加成功",res);
         }
     }
+
 }

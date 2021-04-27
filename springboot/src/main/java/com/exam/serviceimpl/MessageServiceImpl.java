@@ -40,4 +40,9 @@ public class MessageServiceImpl implements MessageService {
     public int add(Message message) {
         return messageMapper.add(message);
     }
+
+    @Override
+    public  IPage<Message> findAll2(Page page,String mvId) {
+        return messageMapper.findAll2(page,mvId);
+    }
 }

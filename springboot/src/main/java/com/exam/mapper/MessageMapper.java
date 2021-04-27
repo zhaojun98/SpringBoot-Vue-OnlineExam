@@ -31,4 +31,7 @@ public interface MessageMapper {
     @Options(useGeneratedKeys = true,keyProperty = "id")
     @Insert("insert into message(student_id, content, time,mv_id) values(#{studentId},#{content},#{time},#{mvId})")
     int add(Message message);
+
+    @Select("select id,student_id,content,time,mv_id from message where mv_id=#{mvId} order by id desc")
+    IPage<Message> findAll2(Page page,@Param("mvId") String mvId);
 }
