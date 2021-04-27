@@ -9,13 +9,13 @@ import java.util.List;
 
 @Mapper
 public interface MessageMapper {
-    @Select("select id,id as temp_id,title,content,time from message order by id desc")
+    @Select("select id,id as temp_id,student_id,content,time,mv_id from message order by id desc")
     @Results({
             @Result(property = "replays", column = "temp_id",many = @Many(select = "com.exam.mapper.ReplayMapper.findAllById"))
     })
     IPage<Message> findAll(Page page);
 
-    @Select("select id,title,content,time from message where id = #{id}")
+    @Select("select id,student_id,content,time,mv_id from message where id = #{id}")
     @Results({
             @Result(property = "replays", column = "id",many = @Many(select = "com.exam.mapper.ReplayMapper.findAllById"))
     })
@@ -24,11 +24,11 @@ public interface MessageMapper {
     @Delete("delete from message where id = #{id}")
     int delete(Integer id);
 
-    @Update("update message set title = #{title}, content = #{content}, time = #{time} where " +
+    @Update("update message set student_id = #{studentId}, content = #{content}, time = #{time},mv_id=#{mvId} where " +
             "id = #{id}")
     int update(Message message);
 
     @Options(useGeneratedKeys = true,keyProperty = "id")
-    @Insert("insert into message(title, content, time) values(#{title},#{content},#{time})")
+    @Insert("insert into message(student_id, content, time,mv_id) values(#{studentId},#{content},#{time},#{mvId})")
     int add(Message message);
 }

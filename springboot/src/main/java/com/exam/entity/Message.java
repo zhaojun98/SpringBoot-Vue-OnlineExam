@@ -15,8 +15,12 @@ public class Message {
 
     private String content;
 
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
-    private Date time;
+//    @JsonFormat(pattern = "yyyy-MM-dd", timezone="GMT+8")
+    private String time;
+
+    private String studentId;
+
+    private String mvId;
 
     List<Replay> replays;   //一对多关系，评论信息
 }

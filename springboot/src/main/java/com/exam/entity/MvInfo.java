@@ -3,6 +3,8 @@ package com.exam.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 
+import java.util.Date;
+
 public class MvInfo {
 	private String id;
 	/** 教师关联id */
@@ -28,6 +30,15 @@ public class MvInfo {
 	///职称
 	@TableField(exist = false)
 	private String type;
+
+	@TableField(exist = false)
+	private String studentName;
+
+	@TableField(exist = false)
+	private String content;
+
+	@TableField(exist = false)
+	private String time;
 
 	public void setId(String id) {
 		this.id = id;
@@ -115,6 +126,30 @@ public class MvInfo {
 
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
+	}
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	@Override
