@@ -66,14 +66,12 @@ export default {
     login() {
       console.log("登录操作执行-------");
       this.$axios({
-        url: `/api/login`,
+        url: '/api/login',
         method: 'post',
         data: {
           ...this.formLabelAlign
         }
       }).then(res=>{
-        debugger
-        
         let resData = res.data.data
         if(resData != null) {
           switch(resData.role) {

@@ -9,7 +9,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import VueCookies from 'vue-cookies'
 import VideoPlayer from 'vue-video-player'
-
+import utils from '@/utils/utils'
 
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
@@ -23,6 +23,7 @@ Vue.config.productionTip = false
 Vue.prototype.bus = new Vue()
 Vue.prototype.$echarts = echarts
 Vue.prototype.$axios = axios
+Vue.prototype.utils = utils
 
 new Vue({
   el: '#app',

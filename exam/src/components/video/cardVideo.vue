@@ -1,20 +1,22 @@
 <template>
   <div class="cards">
-    
+
       <div
-        v-for="(o, index) in 12"
-        :key="o"
+        v-for="(data,index) in videoList"
+        :key="index"
         :offset="index > 0 ? 2 : 0"
         style="margin:20px 20px 0 0;"
       >
         <el-card>
           <img
-            src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+            :src="data.imgPath"
             class="image"
           />
             <div class="bottom">
-              <el-button type="text" class="button" ><router-link to="/video">数据结构</router-link></el-button><br/>
-              <el-button type="text" class="button" to="/cardVideo"><router-link to="/video">讲师：张三</router-link></el-button>
+              <!-- <el-button type="text" class="button" ><router-link to="/video">介绍:{{ data.drama }}</router-link></el-button><br/> -->
+              <el-button type="text" class="button" @click="toVideo()">介绍:{{ data.drama }}</el-button><br/>
+              <el-button type="text" class="button" @click="toVideo()">课程：{{ data.subject }}</el-button><br/>
+              <el-button type="text" class="button" @click="toVideo()">讲师：{{ data.teacherName }}</el-button>
             </div>
         </el-card>
       </div>
@@ -24,10 +26,49 @@
 export default {
   data() {
     return {
-      currentDate: new Date()
+      currentDate: new Date(),
       //id，科目，讲师，备注，时间，
       //分表：视频地址，id,时间，标题，pid
+      videoList:[],
+      subject:"",
+      indexId:""
     };
+  },
+  created(){
+    this.getList()
+  },
+  methods:{
+    getList(){
+      let params = {
+        page:1,
+        size:5
+      }
+      params = JSON.stringify(params)
+      let that = this
+      this.$axios({
+        url:"/api/mv/list",
+        method: "post",
+        headers: { "content-type": "application/json" },
+        data:params,
+      }).then(res => {
+        if(res.data.code == 200){
+          res.data.data.records.forEach(data => {
+            that.subject = data.subject
+            that.indexId = data.id
+          });
+          that.videoList = res.data.data.records
+          console.log(res.data.data);
+        }
+
+      })
+    },
+    toVideo(){
+
+      this.$router.push({
+        path: '/video',
+        query: {subject: this.subject,id:this.indexId}
+      })
+    }
   }
 }
 </script>

@@ -17,7 +17,7 @@ public interface MvInfoMapper {
      *
      * @return 返回集合，没有返回空List
      */
-	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id order by m.id ASC")
+	@Select("SELECT m.*,t.teacherName,t.institute,t.type FROM mv_info m inner join teacher t on t.teacherId=m.teacher_id group by m.subject order by m.id ASC")
 	IPage<MvInfo> listAll(Page page);
 
 	/**

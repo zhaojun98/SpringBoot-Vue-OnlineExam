@@ -51,6 +51,7 @@ public class MvInfoService {
      * @return 返回影响行数
      */
     public int insert(MvInfo mvInfo) {
+        mvInfo.setPid(String.valueOf(System.currentTimeMillis()));
     	return mvInfoMapper.insert(mvInfo);
     }
 	

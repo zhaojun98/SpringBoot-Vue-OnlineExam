@@ -29,7 +29,7 @@ public class MvInfoController {
     private MvInfoService mvInfoService;
 
     /**
-     * 查询所有记录
+     * 查询所有记录       /mv/list
      *
      * @return 返回集合，没有返回空List
      */
